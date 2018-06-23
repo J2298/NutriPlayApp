@@ -5,18 +5,21 @@ import java.util.ArrayList;
 public class Modulo {
 
     private String id, titulo, descripcion, picture;
-    private ArrayList<Contenido> contenido;
-    private ArrayList<Pregunta> pregunta;
+    private Contenido contenido;
+   // private ArrayList<Contenido> contenido;
+    private Pregunta pregunta1, pregunta2, pregunta3;
 
     public Modulo(){}
 
-    public Modulo(String id, String titulo, String descripcion, String picture, ArrayList<Contenido> contenido, ArrayList<Pregunta> pregunta) {
+    public Modulo(String id, String titulo, String descripcion, String picture, Contenido contenido, Pregunta pregunta1, Pregunta pregunta2, Pregunta pregunta3) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.picture = picture;
         this.contenido = contenido;
-        this.pregunta = pregunta;
+        this.pregunta1 = pregunta1;
+        this.pregunta2 = pregunta2;
+        this.pregunta3 = pregunta3;
     }
 
     public String getId() {
@@ -51,20 +54,36 @@ public class Modulo {
         this.picture = picture;
     }
 
-    public ArrayList<Contenido> getContenido() {
+    public Contenido getContenido() {
         return contenido;
     }
 
-    public void setContenido(ArrayList<Contenido> contenido) {
+    public void setContenido(Contenido contenido) {
         this.contenido = contenido;
     }
 
-    public ArrayList<Pregunta> getPregunta() {
-        return pregunta;
+    public Pregunta getPregunta1() {
+        return pregunta1;
     }
 
-    public void setPregunta(ArrayList<Pregunta> pregunta) {
-        this.pregunta = pregunta;
+    public void setPregunta1(Pregunta pregunta1) {
+        this.pregunta1 = pregunta1;
+    }
+
+    public Pregunta getPregunta2() {
+        return pregunta2;
+    }
+
+    public void setPregunta2(Pregunta pregunta2) {
+        this.pregunta2 = pregunta2;
+    }
+
+    public Pregunta getPregunta3() {
+        return pregunta3;
+    }
+
+    public void setPregunta3(Pregunta pregunta3) {
+        this.pregunta3 = pregunta3;
     }
 
     @Override
@@ -75,7 +94,9 @@ public class Modulo {
                 ", descripcion='" + descripcion + '\'' +
                 ", picture='" + picture + '\'' +
                 ", contenido=" + contenido +
-                ", preguntas=" + pregunta +
+                ", pregunta1=" + pregunta1 +
+                ", pregunta2=" + pregunta2 +
+                ", pregunta3=" + pregunta3 +
                 '}';
     }
 }

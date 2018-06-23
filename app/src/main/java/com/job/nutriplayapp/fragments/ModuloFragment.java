@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.job.nutriplayapp.models.Modulo;
 import com.job.nutriplayapp.adapters.ModulosAdapter;
 import com.job.nutriplayapp.R;
+import com.job.nutriplayapp.models.Pregunta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,19 +54,17 @@ public class ModuloFragment extends Fragment {
                             mDatabase.child("coleccion_modulo").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
+
                                     for (DataSnapshot ds : dataSnapshot.getChildren()){
                                         boolean estado = ds.getValue(Boolean.class);
                                         if(estado){
                                             String id_modulo = ds.getKey();
                                             if(dsp.getKey().equals(id_modulo)){
-                                              //  HashMap<String,Modulo> modulo = dsp.getValue(HashMap<String, Modulo>);
-                                              //  Log.d("clase", dsp.getValue().getClass().toString());
-                                             //  Modulo modulo = dsp.getValue(Modulo.class);
+                                               Modulo modulo =  dsp.getValue(Modulo.class);
                                                modulo.setId(dsp.getKey());
                                                Log.d("modulo n: ", modulo.toString());
                                                modulos.add(modulo);
                                                 ModulosAdapter adapter = new ModulosAdapter();
-                                               // Log.d("moduloss: ", modulos.toString());
                                                 adapter.setModulos(modulos);
                                                 modulosList.setAdapter(adapter);
                                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());

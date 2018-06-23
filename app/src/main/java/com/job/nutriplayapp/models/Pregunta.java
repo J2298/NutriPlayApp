@@ -5,15 +5,17 @@ import java.util.ArrayList;
 public class Pregunta {
 
     private String id, pregunta;
-    private ArrayList<Alternativa> alternativa;
+    private Alternativa alternativa1, alternativa2, alternativa3;
 
     public Pregunta() {
     }
 
-    public Pregunta(String id, String pregunta, ArrayList<Alternativa> alternativa) {
+    public Pregunta(String id, String pregunta, Alternativa alternativa1, Alternativa alternativa2, Alternativa alternativa3) {
         this.id = id;
         this.pregunta = pregunta;
-        this.alternativa = alternativa;
+        this.alternativa1 = alternativa1;
+        this.alternativa2 = alternativa2;
+        this.alternativa3 = alternativa3;
     }
 
     public String getId() {
@@ -32,12 +34,28 @@ public class Pregunta {
         this.pregunta = pregunta;
     }
 
-    public ArrayList<Alternativa> getAlternativa() {
-        return alternativa;
+    public Alternativa getAlternativa1() {
+        return alternativa1;
     }
 
-    public void setAlternativa(ArrayList<Alternativa> alternativa) {
-        this.alternativa = alternativa;
+    public void setAlternativa1(Alternativa alternativa1) {
+        this.alternativa1 = alternativa1;
+    }
+
+    public Alternativa getAlternativa2() {
+        return alternativa2;
+    }
+
+    public void setAlternativa2(Alternativa alternativa2) {
+        this.alternativa2 = alternativa2;
+    }
+
+    public Alternativa getAlternativa3() {
+        return alternativa3;
+    }
+
+    public void setAlternativa3(Alternativa alternativa3) {
+        this.alternativa3 = alternativa3;
     }
 
     @Override
@@ -45,7 +63,9 @@ public class Pregunta {
         return "Pregunta{" +
                 "id='" + id + '\'' +
                 ", pregunta='" + pregunta + '\'' +
-                ", alternativa=" + alternativa +
+                ", alternativa1=" + alternativa1 +
+                ", alternativa2=" + alternativa2 +
+                ", alternativa3=" + alternativa3 +
                 '}';
     }
 }

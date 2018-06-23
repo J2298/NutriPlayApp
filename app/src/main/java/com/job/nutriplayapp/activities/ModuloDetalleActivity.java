@@ -54,8 +54,8 @@ public class ModuloDetalleActivity extends AppCompatActivity {
                                 if(ds.getKey().equals(dsp.getKey())){
                                     Modulo modulo = ds.getValue(Modulo.class);
                                     Log.d("modulo", modulo.toString());
-                                    Log.d("contenido1", modulo.getContenido().get(1).getTexto());
-                                    texto1.setText(modulo.getContenido().get(1).getTexto());
+                                    Log.d("contenido1", modulo.getContenido().getTexto1());
+                                    texto1.setText(modulo.getContenido().getTexto1());
                                   /*  ds.child("contenido").getRef().addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
