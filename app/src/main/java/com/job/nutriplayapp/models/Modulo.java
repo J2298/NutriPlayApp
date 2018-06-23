@@ -1,19 +1,22 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.models;
+
+import java.util.ArrayList;
 
 public class Modulo {
 
-    private String id;
-    private String titulo;
-    private String descripcion;
-    private String picture;
+    private String id, titulo, descripcion, picture;
+    private ArrayList<Contenido> contenido;
+    private ArrayList<Pregunta> pregunta;
 
     public Modulo(){}
 
-    public Modulo(String id, String titulo, String descripcion, String picture) {
+    public Modulo(String id, String titulo, String descripcion, String picture, ArrayList<Contenido> contenido, ArrayList<Pregunta> pregunta) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.picture = picture;
+        this.contenido = contenido;
+        this.pregunta = pregunta;
     }
 
     public String getId() {
@@ -48,13 +51,31 @@ public class Modulo {
         this.picture = picture;
     }
 
+    public ArrayList<Contenido> getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(ArrayList<Contenido> contenido) {
+        this.contenido = contenido;
+    }
+
+    public ArrayList<Pregunta> getPregunta() {
+        return pregunta;
+    }
+
+    public void setPregunta(ArrayList<Pregunta> pregunta) {
+        this.pregunta = pregunta;
+    }
+
     @Override
     public String toString() {
         return "Modulo{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", titulo='" + titulo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", picture='" + picture + '\'' +
+                ", contenido=" + contenido +
+                ", preguntas=" + pregunta +
                 '}';
     }
 }

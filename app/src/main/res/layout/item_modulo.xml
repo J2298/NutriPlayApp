@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardView.Light"
@@ -16,12 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+       <ImageView
             android:id="@+id/picture_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@+id/primary_text"
+            app:layout_constraintBottom_toTopOf="@+id/titulo_text"
             app:layout_constraintDimensionRatio="H,16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,7 @@
             app:srcCompat="@android:color/darker_gray" />
 
         <TextView
-            android:id="@+id/primary_text"
+            android:id="@+id/titulo_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -39,29 +40,15 @@
             android:text="Titulo"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/action_button_1"
+            app:layout_constraintBottom_toTopOf="@+id/desplegableButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/picture_image" />
 
-        <Button
-            android:id="@+id/action_button_1"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:minWidth="0dp"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:text="Accion alterna"
-            android:textColor="#000000"
-            app:layout_constraintBottom_toTopOf="@+id/desc_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/primary_text" />
+
 
         <Button
-            android:id="@+id/action_button_2"
+            android:id="@+id/nextButton"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,12 +56,12 @@
             android:minWidth="0dp"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:text="Ingresar"
+            android:text="Empezar"
             android:textColor="#000000"
-            app:layout_constraintStart_toEndOf="@+id/action_button_1"
-            app:layout_constraintTop_toTopOf="@+id/action_button_1" />
+            app:layout_constraintStart_toEndOf="@+id/desplegableButton"
+            app:layout_constraintTop_toTopOf="@+id/desplegableButton" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/desplegableButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,12 +69,16 @@
             android:layout_marginEnd="8dp"
             android:background="#00FFFFFF"
             android:padding="6dp"
-            app:layout_constraintBottom_toBottomOf="@+id/action_button_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_expand_more_black_36dp" />
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/desc_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titulo_text"
+            app:srcCompat="@drawable/ic_expand_less_black_36dp" />
 
         <TextView
             android:id="@+id/desc_text"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
@@ -101,7 +92,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/action_button_1" />
+            app:layout_constraintTop_toBottomOf="@+id/desplegableButton" />
+
 
     </android.support.constraint.ConstraintLayout>
 

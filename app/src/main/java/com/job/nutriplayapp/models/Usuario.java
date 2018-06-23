@@ -1,4 +1,4 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.models;
 
 public class Usuario {
     private String nombre;

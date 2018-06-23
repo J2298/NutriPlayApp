@@ -1,4 +1,4 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.job.nutriplayapp.R;
 
 
 public class TemaFragment extends Fragment {

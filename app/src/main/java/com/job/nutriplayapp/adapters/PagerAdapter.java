@@ -1,13 +1,16 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class ViewAdapter extends FragmentStatePagerAdapter {
+import com.job.nutriplayapp.fragments.MisRecetasFragment;
+import com.job.nutriplayapp.fragments.TiendaFragment;
+
+public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
 
-    public ViewAdapter(FragmentManager fm, int NumOfTabs) {
+    public PagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
     }
@@ -17,14 +20,11 @@ public class ViewAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                ModuloFragment tab1 = new ModuloFragment();
+                MisRecetasFragment tab1 = new MisRecetasFragment();
                 return tab1;
             case 1:
-                AlimentoFragment tab2 = new AlimentoFragment();
+                TiendaFragment tab2 = new TiendaFragment();
                 return tab2;
-            case 2:
-                TemaFragment tab3 = new TemaFragment();
-                return tab3;
             default:
                 return null;
         }
@@ -35,4 +35,3 @@ public class ViewAdapter extends FragmentStatePagerAdapter {
         return mNumOfTabs;
     }
 }
-

@@ -1,10 +1,12 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.activities;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+
+import com.job.nutriplayapp.adapters.PagerAdapter;
+import com.job.nutriplayapp.R;
 
 public class RecetaActivity extends AppCompatActivity {
 
@@ -22,8 +24,7 @@ public class RecetaActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Tienda"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

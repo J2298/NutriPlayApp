@@ -1,10 +1,11 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.job.nutriplayapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class DetalleRecetaActivity extends AppCompatActivity {
         for( int i = 0; i < contenidoList.size(); i++){
             contenidoText.append(contenidoList.get(i)+"\n");
         }
-        //Picasso.with(this).load(imagen).into(imageView);
+        Picasso.get().load(imagen).into(imageView);
 
     }
 }

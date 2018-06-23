@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".DetalleJuegoActivity">
+    tools:context=".activities.DetalleJuegoActivity">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView1"
@@ -19,8 +19,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textStyle="bold"
-            android:text="Pregunta" />
+            android:text="Pregunta"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -35,6 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
             android:text="VERDAD" />
     </android.support.v7.widget.CardView>
 
@@ -50,6 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
             android:text="MITO" />
     </android.support.v7.widget.CardView>
 

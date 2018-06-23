@@ -1,14 +1,15 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.additional;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.job.nutriplayapp.R;
+import com.job.nutriplayapp.activities.JuegoActivity;
 
 public class ViewDialog {
 

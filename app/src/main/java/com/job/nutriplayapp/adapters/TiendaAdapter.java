@@ -1,4 +1,4 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.adapters;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.job.nutriplayapp.R;
+import com.job.nutriplayapp.models.Receta;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

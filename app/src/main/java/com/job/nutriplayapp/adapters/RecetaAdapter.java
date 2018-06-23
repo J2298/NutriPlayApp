@@ -1,4 +1,4 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.job.nutriplayapp.R;
+import com.job.nutriplayapp.jobsdetallereceta;
+import com.job.nutriplayapp.models.Receta;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.ViewHolder
         public TextView titulo;
         public TextView descripcion;
         public ImageView picture;
+
         public ViewHolder(View itemView) {
             super(itemView);
             picture = (ImageView) itemView.findViewById(R.id.picture_image);
@@ -56,15 +59,15 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.ViewHolder
         viewHolder.titulo.setText(receta.getTitulo());
         viewHolder.descripcion.setText(receta.getDescripcion());
 
-        //Picasso.with(viewHolder.itemView.getContext()).load(receta.getImagen()).into(viewHolder.picture);
         Picasso.get().load(receta.getImagen()).into(viewHolder.picture);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i1 = new Intent(view.getContext(), DetalleRecetaActivity.class);
-                i1.putExtra("titulo", receta.getTitulo());
+                Intent i1 = new Intent(view.getContext(), jobsdetallereceta.class);
                 i1.putExtra("imagen", receta.getImagen());
+                i1.putExtra("titulo", receta.getTitulo());
+
                 i1.putExtra("ingredientes", receta.getIngredientes());
                 i1.putExtra("contenido", receta.getContenido());
                 view.getContext().startActivity(i1);

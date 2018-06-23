@@ -34,7 +34,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,21 +42,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity">
-
-        </activity>
-        <activity android:name=".ModuloActivity"></activity>
-        <activity android:name=".ModuloDetalleActivity"></activity>
-        <activity android:name=".PreguntaActivity"></activity>
-        <activity android:name=".FelicidadesActivity"></activity>
-        <activity android:name=".ResultadoActivity"></activity>
-        <activity android:name=".DetalleJuegoActivity" />
-        <activity android:name=".DetalleRecetaActivity" />
-        <activity android:name=".JuegoActivity" />
-        <activity android:name=".RecetaActivity" />
-        <activity android:name=".AvatarActivity">
-
-        </activity>
+        <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.ModuloDetalleActivity" />
+        <activity android:name=".PreguntaActivity" />
+        <activity android:name=".FelicidadesActivity" />
+        <activity android:name=".ResultadoActivity" />
+        <activity android:name=".activities.DetalleJuegoActivity" />
+        <activity android:name=".activities.DetalleRecetaActivity" />
+        <activity android:name=".activities.JuegoActivity" />
+        <activity android:name=".activities.RecetaActivity" />
+        <activity android:name=".activities.AvatarActivity" />
+        <activity android:name=".jobsdetallereceta" />
+        <activity android:name=".fragments.IngredientesFragment" />
+        <activity android:name=".fragments.PreparacionFragment"></activity>
     </application>
 
 </manifest>

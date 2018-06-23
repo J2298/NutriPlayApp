@@ -1,4 +1,4 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.activities;
 
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +13,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.job.nutriplayapp.R;
+import com.job.nutriplayapp.additional.ViewDialog;
 
 public class DetalleJuegoActivity extends AppCompatActivity {
 

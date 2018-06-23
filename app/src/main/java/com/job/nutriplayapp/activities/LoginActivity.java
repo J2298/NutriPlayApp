@@ -1,4 +1,4 @@
-package com.job.nutriplayapp;
+package com.job.nutriplayapp.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -14,7 +14,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -38,6 +37,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.job.nutriplayapp.R;
+import com.job.nutriplayapp.models.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -158,6 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 if (task.isSuccessful()) {
+                                                                    createColecciones(uid);
                                                                     Log.d(LGN, "Usuario con Fb Creado");
                                                                     Toast.makeText(LoginActivity.this, "Usuario Creado", Toast.LENGTH_SHORT).show();
                                                                 } else {
@@ -370,7 +372,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     Log.d(LGN, "Sesion iniciada: " + user.getUid());
                     Log.d(LGN, "Usuario: " + user.getDisplayName());
-                    Intent home = new Intent(LoginActivity.this, HomeActivity.class);
+                    Intent home = new Intent(LoginActivity.this, AvatarActivity.class);
                     startActivity(home);
                     finish();
                 } else {
