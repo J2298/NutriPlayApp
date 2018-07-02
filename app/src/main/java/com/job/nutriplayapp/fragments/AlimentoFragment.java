@@ -29,7 +29,7 @@ public class AlimentoFragment extends Fragment {
     private RecyclerView modulosList;
     private DatabaseReference mDatabase;
     private  List<Modulo> modulos = new ArrayList<>();
-    private String uid;
+    private String uid= "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,8 +37,8 @@ public class AlimentoFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_alimento, container, false);
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        uid = currentUser.getUid();
+        //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        //uid = currentUser.getUid();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("alimento").addListenerForSingleValueEvent(

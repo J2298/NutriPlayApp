@@ -35,14 +35,14 @@
 
         <activity
             android:name=".activities.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.ModuloDetalleActivity" />
         <activity android:name=".PreguntaActivity" />
         <activity android:name=".FelicidadesActivity" />
@@ -52,9 +52,12 @@
         <activity android:name=".activities.JuegoActivity" />
         <activity android:name=".activities.RecetaActivity" />
         <activity android:name=".activities.AvatarActivity" />
+        <activity android:name=".activities.ModuloCuestionarioActivity" />
         <activity android:name=".jobsdetallereceta" />
+        <!--
         <activity android:name=".fragments.IngredientesFragment" />
-        <activity android:name=".fragments.PreparacionFragment"></activity>
+        <activity android:name=".fragments.PreparacionFragment">
+        -->
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.job.nutriplayapp.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,23 +28,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class ModuloFragment extends Fragment {
 
     View view;
     private RecyclerView modulosList;
     private DatabaseReference mDatabase;
     private  List<Modulo> modulos = new ArrayList<Modulo>();
-    private String uid;
+    private String uid= "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("prueba","entró");
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_modulo, container, false);
         modulosList = (RecyclerView)view.findViewById(R.id.modulos_list);
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        uid = currentUser.getUid();
+        //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        //uid = currentUser.getUid();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("modulo").addListenerForSingleValueEvent(
@@ -66,20 +71,18 @@ public class ModuloFragment extends Fragment {
                                                modulos.add(modulo);
                                                 ModulosAdapter adapter = new ModulosAdapter();
                                                 adapter.setModulos(modulos);
-                                                modulosList.setAdapter(adapter);
                                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                                                 modulosList.setLayoutManager(layoutManager);
+                                                modulosList.setAdapter(adapter);
                                             }
                                         }
                                     }
                                 }
-
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
 
                                 }
                             });
-
                         }
                     }
 
@@ -89,16 +92,6 @@ public class ModuloFragment extends Fragment {
                     }
                 }
         );
-
-
-
-
-       /* ModulosAdapter adapter = new ModulosAdapter();
-
-        List<Modulo> modulos = ModuloRepository.getModulos();
-        adapter.setModulos(modulos);
-
-        modulosList.setAdapter(adapter);*/
 
         return view;
     }

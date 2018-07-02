@@ -28,7 +28,7 @@ public class JuegoActivity extends AppCompatActivity {
     private ArrayList<String> content = new ArrayList<>();
     private int n = 0;
     ProgressDialog progress;
-    private String uid;
+    private String uid= "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +41,8 @@ public class JuegoActivity extends AppCompatActivity {
         progress.setCancelable(false);
         progress.show();
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        uid = currentUser.getUid();
+        //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        //uid = currentUser.getUid();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("juego").addListenerForSingleValueEvent(new ValueEventListener() {

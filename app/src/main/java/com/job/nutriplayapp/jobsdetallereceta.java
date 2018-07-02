@@ -1,14 +1,20 @@
 package com.job.nutriplayapp;
 
+import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.job.nutriplayapp.adapters.ViewDetaAdapter;
 import com.squareup.picasso.Picasso;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class jobsdetallereceta extends AppCompatActivity {
 
@@ -23,10 +29,18 @@ public class jobsdetallereceta extends AppCompatActivity {
         imagenReceta = (ImageView)findViewById(R.id.imagen_alimento);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
+        //Inicialización de la librería de fuentes de texto
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/dosis-book.ttf").setFontAttrId(R.attr.fontPath).build());
+
         String titulo = getIntent().getExtras().getString("titulo");
         Picasso.get().load(getIntent().getExtras().getString("imagen")).into(imagenReceta);
 
-        /*TabLayout detalleTab = (TabLayout) findViewById(R.id.tabDetalle);
+        //Establecimiento de propiedades para el toolbar
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        collapsingToolbar.setTitle(" ");
+
+        TabLayout detalleTab = (TabLayout) findViewById(R.id.tabDetalle);
         detalleTab.addTab(detalleTab.newTab().setText("Ingredientes"));
         detalleTab.addTab(detalleTab.newTab().setText("Preparacion"));
         detalleTab.setTabGravity(detalleTab.GRAVITY_FILL);
@@ -40,7 +54,7 @@ public class jobsdetallereceta extends AppCompatActivity {
 
         detallePager.setAdapter(adapterDetalle);
         detallePager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(detalleTab));
-        detalleTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        detalleTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 detallePager.setCurrentItem(tab.getPosition());
@@ -57,7 +71,12 @@ public class jobsdetallereceta extends AppCompatActivity {
 
             }
         });
-*/
+
+    }
+    //Importante - Añadir este método es escencial para establecer el contexto base de la librería
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }
 

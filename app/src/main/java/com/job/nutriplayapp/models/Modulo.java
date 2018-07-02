@@ -1,8 +1,11 @@
 package com.job.nutriplayapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class Modulo {
+public class Modulo implements Parcelable {
 
     private String id, titulo, descripcion, picture;
     private Contenido contenido;
@@ -99,4 +102,45 @@ public class Modulo {
                 ", pregunta3=" + pregunta3 +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(titulo);
+        dest.writeString(descripcion);
+        dest.writeString(picture);
+        dest.writeParcelable(contenido,flags);
+        dest.writeParcelable(pregunta1,flags);
+        dest.writeParcelable(pregunta2,flags);
+        dest.writeParcelable(pregunta3,flags);
+    }
+
+    public Modulo(Parcel in) {
+        id = in.readString();
+        titulo = in.readString();
+        descripcion = in.readString();
+        picture = in.readString();
+        contenido = in.readParcelable(getClass().getClassLoader());
+        pregunta1 = in.readParcelable(getClass().getClassLoader());
+        pregunta2 = in.readParcelable(getClass().getClassLoader());
+        pregunta3 = in.readParcelable(getClass().getClassLoader());
+    }
+
+    public static final Creator<Modulo> CREATOR = new Creator<Modulo>() {
+        @Override
+        public Modulo createFromParcel(Parcel in) {
+            return new Modulo(in);
+        }
+
+        @Override
+        public Modulo[] newArray(int size) {
+            return new Modulo[size];
+        }
+    };
+
 }

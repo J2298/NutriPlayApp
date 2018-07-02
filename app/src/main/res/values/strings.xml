@@ -4,7 +4,6 @@
     <!--Para Facebook-->
     <string name="facebook_app_id">174423793394229</string>
     <string name="fb_login_protocol_scheme">fb174423793394229</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_home">HomeActivity</string>

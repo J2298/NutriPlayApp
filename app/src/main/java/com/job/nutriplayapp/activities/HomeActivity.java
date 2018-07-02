@@ -1,6 +1,7 @@
 package com.job.nutriplayapp.activities;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.support.constraint.ConstraintLayout;
@@ -31,6 +32,9 @@ import com.job.nutriplayapp.R;
 import com.job.nutriplayapp.adapters.ViewAdapter;
 import com.squareup.picasso.Picasso;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
@@ -42,15 +46,19 @@ public class HomeActivity extends AppCompatActivity {
     private boolean isOpen = false;
     private TextView nombre, moneda, exp;
     private ImageView avatar;
-    private String uid;
+    private String uid = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
+
+        //Inicialización de la librería de fuentes de texto
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/dosis-book.ttf").setFontAttrId(R.attr.fontPath).build());
+
 
         layoutMain =(ConstraintLayout) findViewById(R.id.layoutMain);
         layoutButtons = (RelativeLayout) findViewById(R.id.layoutButtons);
@@ -75,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -98,9 +106,10 @@ public class HomeActivity extends AppCompatActivity {
         exp = (TextView) findViewById(R.id.expText);
         avatar = (ImageView)findViewById(R.id.avatarView);
 
+        /*
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         uid = currentUser.getUid();
-
+        */
         DatabaseReference userData = FirebaseDatabase.getInstance().getReference("usuario").child(uid);
         userData.addValueEventListener(new ValueEventListener() {
             @Override
@@ -206,6 +215,11 @@ public class HomeActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         finish();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 
