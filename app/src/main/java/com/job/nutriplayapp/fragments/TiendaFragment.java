@@ -29,15 +29,15 @@ public class TiendaFragment extends Fragment {
     private RecyclerView misrecetasList;
     private DatabaseReference mDatabase;
     private List<Receta> recetas = new ArrayList<>();
-    private String uid= "Ybg1r40z6jW05KYxljglbPSIHDf2";
+    //private String uid= "Ybg1r40z6jW05KYxljglbPSIHDf2";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_tienda, container, false);
 
-        //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        //uid = currentUser.getUid();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String uid = currentUser.getUid();
 
         misrecetasList = (RecyclerView) view.findViewById(R.id.tiendaLista);
         mDatabase = FirebaseDatabase.getInstance().getReference();

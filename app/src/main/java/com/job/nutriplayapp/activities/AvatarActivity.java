@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.job.nutriplayapp.R;
+import com.job.nutriplayapp.utilidades.SesionPreference;
 import com.squareup.picasso.Picasso;
 
 public class AvatarActivity extends AppCompatActivity {
@@ -32,6 +33,8 @@ public class AvatarActivity extends AppCompatActivity {
 
     private ImageView avatarView;
 
+    private SesionPreference sesionPreference;
+
     private String uid;
     private String url1 = "https://firebasestorage.googleapis.com/v0/b/nutriplayapp.appspot.com/o/avatares%2Fav1.png?alt=media&token=fc65d708-6ea7-4b1a-85b1-08776c896775";
     private String url2 = "https://firebasestorage.googleapis.com/v0/b/nutriplayapp.appspot.com/o/avatares%2Fav2.png?alt=media&token=0d611b31-45e4-4e98-b194-143bf5efc166";
@@ -47,6 +50,13 @@ public class AvatarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_avatar);
+
+        /*sesionPreference = new SesionPreference(this);
+        if(!sesionPreference.firstTime()){
+            sesionPreference.setFirstTime(false);
+            startActivity(new Intent(AvatarActivity.this, HomeActivity.class));
+            finish();
+        }*/
 
         layoutMain = (ConstraintLayout) findViewById(R.id.layoutMain);
         layoutButtons = (ConstraintLayout) findViewById(R.id.layoutButtons);
@@ -215,7 +225,7 @@ public class AvatarActivity extends AppCompatActivity {
         }
     }
 
-    public void goHome(View view){
+    public void goHome(View view) {
         Intent home = new Intent(this, HomeActivity.class);
         startActivity(home);
         finish();

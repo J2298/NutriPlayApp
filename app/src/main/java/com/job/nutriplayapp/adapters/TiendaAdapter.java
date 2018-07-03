@@ -1,6 +1,7 @@
 package com.job.nutriplayapp.adapters;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,15 +32,17 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
     private List<Receta> recetas;
     private DatabaseReference mDatabase;
     private TiendaAdapter adapter;
-    public TiendaAdapter(){
+
+    public TiendaAdapter() {
         this.recetas = new ArrayList<>();
         this.adapter = this;
     }
+
     public void setRecetas(List<Receta> recetas) {
         this.recetas = recetas;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView picture;
         public TextView titulo;
@@ -52,6 +57,7 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
             btnComprar = itemView.findViewById(R.id.btnComprar);
         }
     }
+
     @Override
     public TiendaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tienda, parent, false);
@@ -76,25 +82,16 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String uid = currentUser.getUid();
                 mDatabase = FirebaseDatabase.getInstance().getReference();
-                mDatabase.child("coleccion").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabase.child("coleccion_receta").child(uid).child(receta.getId()).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                            String id_receta = receta.getId();
-                            if (dsp.getKey().equals(id_receta)){
-                                Log.d("Compra", "Agregando receta " + dsp.getKey() + " a Mis Recetas");
-                                dsp.getRef().setValue(true);
-                                ((Activity)view.getContext()).finish();
-                                view.getContext().startActivity(((Activity)view.getContext()).getIntent());
-
-                            }
-
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            ((Activity) view.getContext()).finish();
+                            view.getContext().startActivity(((Activity) view.getContext()).getIntent());
+                            Log.d("TiendaAdapter", "Existoso");
+                        } else {
+                            Log.e("TiendaAdapter", "Hubo fallos");
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
             }

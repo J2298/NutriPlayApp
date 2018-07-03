@@ -41,12 +41,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
     private ConstraintLayout layoutMain;
-    private RelativeLayout layoutButtons;
-    private RelativeLayout layoutContent;
+    private ConstraintLayout layoutButtons;
+    private ConstraintLayout layoutContent;
     private boolean isOpen = false;
     private TextView nombre, moneda, exp;
     private ImageView avatar;
-    private String uid = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +60,9 @@ public class HomeActivity extends AppCompatActivity {
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/dosis-book.ttf").setFontAttrId(R.attr.fontPath).build());
 
 
-        layoutMain =(ConstraintLayout) findViewById(R.id.layoutMain);
-        layoutButtons = (RelativeLayout) findViewById(R.id.layoutButtons);
-        layoutContent = (RelativeLayout) findViewById(R.id.layoutContent);
+        layoutMain = (ConstraintLayout) findViewById(R.id.layoutMain);
+        layoutButtons = (ConstraintLayout) findViewById(R.id.layoutButtons);
+        layoutContent = (ConstraintLayout) findViewById(R.id.layoutContent);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +74,8 @@ public class HomeActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.mainTab);
         tabLayout.addTab(tabLayout.newTab().setText("Modulos"));
-        tabLayout.addTab(tabLayout.newTab().setText("Alimento del Dia"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tema del Dia"));
+        tabLayout.addTab(tabLayout.newTab().setText("Dato Curioso"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tip del Dia"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.mainViewer);
@@ -104,12 +104,12 @@ public class HomeActivity extends AppCompatActivity {
         nombre = (TextView) findViewById(R.id.nombreText);
         moneda = (TextView) findViewById(R.id.monedasText);
         exp = (TextView) findViewById(R.id.expText);
-        avatar = (ImageView)findViewById(R.id.avatarView);
+        avatar = (ImageView) findViewById(R.id.avatarView);
 
-        /*
+
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         uid = currentUser.getUid();
-        */
+
         DatabaseReference userData = FirebaseDatabase.getInstance().getReference("usuario").child(uid);
         userData.addValueEventListener(new ValueEventListener() {
             @Override
@@ -127,8 +127,8 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void viewMenu(){
-        if(!isOpen){
+    private void viewMenu() {
+        if (!isOpen) {
             int x = layoutContent.getRight();
             int y = layoutContent.getBottom();
 
@@ -143,7 +143,7 @@ public class HomeActivity extends AppCompatActivity {
             animator.start();
 
             isOpen = true;
-        }else{
+        } else {
             int x = layoutContent.getRight();
             int y = layoutContent.getBottom();
 
@@ -194,8 +194,8 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(i1);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -208,14 +208,14 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
-    private void callLogout(View view){
+    /*private void callLogout(View view) {
         Log.d(TAG, "Sesion Cerrada");
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         finish();
-    }
+    }*/
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -223,4 +223,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    public void callLogout(View view) {
+        Log.d(TAG, "Sesion Cerrada");
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+        finish();
+    }
 }

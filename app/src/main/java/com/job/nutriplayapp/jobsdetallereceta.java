@@ -30,7 +30,7 @@ public class jobsdetallereceta extends AppCompatActivity {
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
         //Inicialización de la librería de fuentes de texto
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/dosis-book.ttf").setFontAttrId(R.attr.fontPath).build());
+        //CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/dosis-book.ttf").setFontAttrId(R.attr.fontPath).build());
 
         String titulo = getIntent().getExtras().getString("titulo");
         Picasso.get().load(getIntent().getExtras().getString("imagen")).into(imagenReceta);
@@ -74,10 +74,10 @@ public class jobsdetallereceta extends AppCompatActivity {
 
     }
     //Importante - Añadir este método es escencial para establecer el contexto base de la librería
-    @Override
+   /* @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+    }*/
 }
 
 

@@ -218,6 +218,9 @@ public class LoginActivity extends AppCompatActivity {
             if (requestCode == GOOGLE_SIGNIN_REQUEST) {
                 Log.d(LGN, "Respuesta de Google");
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                Log.d(LGN, result.getStatus() + "");
+                Log.d(LGN, resultCode + "");
+                Log.d(LGN, data + "");
                 if (result.isSuccess()) {
                     Log.d(LGN, "Respuesta Buena");
                     GoogleSignInAccount user = result.getSignInAccount();
@@ -393,7 +396,7 @@ public class LoginActivity extends AppCompatActivity {
                     String id_receta = ds.getKey();
                     Log.d("ids", id_receta);
                     DatabaseReference coleccionReceta = FirebaseDatabase.getInstance().getReference("coleccion_receta");
-                    coleccionReceta.child(uidx).child(id_receta).setValue(true)
+                    coleccionReceta.child(uidx).child(id_receta).setValue(false)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -444,7 +447,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -458,7 +460,6 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
 }
 
 

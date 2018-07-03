@@ -35,8 +35,8 @@ public class DetalleRecetaActivity extends AppCompatActivity {
         tituloText.setText(titulo);
         ingredientesText.setText("");
         contenidoText.setText("");
-        List<String> ingredientesList = Arrays.asList(ingredientes.split(","));
-        List<String> contenidoList = Arrays.asList(contenido.split(","));
+        List<String> ingredientesList = Arrays.asList(ingredientes.split("-"));
+        List<String> contenidoList = Arrays.asList(contenido.split("-"));
         for( int i = 0; i < ingredientesList.size(); i++){
             ingredientesText.append(ingredientesList.get(i)+"\n");
         }

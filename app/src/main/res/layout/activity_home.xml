@@ -119,17 +119,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/layoutContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/layoutButtons"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -137,20 +140,25 @@
             android:gravity="center"
             android:visibility="gone">
             <!-- android:visibility="gone"-->
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginTop="150dp"
-                android:layout_marginBottom="150dp">
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp">
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/module1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:onClick="goToRecetas">
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:onClick="goToRecetas"
+                    app:layout_constraintBottom_toTopOf="@+id/module3"
+                    app:layout_constraintEnd_toStartOf="@+id/module2"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -174,11 +182,53 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/module5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:onClick="callLogout"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/module3"
+                    app:layout_constraintTop_toBottomOf="@+id/module2">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="14dp">
+
+                        <ImageView
+                            android:id="@+id/module_icon5"
+                            android:layout_width="70dp"
+                            android:layout_height="64dp"
+                            app:srcCompat="@drawable/example" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/module_icon5"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Salir" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:id="@+id/module2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:onClick="goToJuego">
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:onClick="goToJuego"
+                    app:layout_constraintBottom_toTopOf="@+id/module5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/module1"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -205,9 +255,14 @@
                     android:id="@+id/module3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
-                    android:onClick="goToColeccion">
+                    android:layout_marginBottom="8dp"
+                    android:onClick="goToColeccion"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/module5"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/module1">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -229,10 +284,10 @@
                             android:text="Colección" />
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>
-            </RelativeLayout>
+            </android.support.constraint.ConstraintLayout>
 
-        </RelativeLayout>
-    </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -243,4 +298,5 @@
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

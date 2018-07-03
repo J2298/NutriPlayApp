@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,32 +20,40 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.job.nutriplayapp.R;
+import com.job.nutriplayapp.adapters.JuegoAdapter;
+import com.job.nutriplayapp.adapters.ModulosAdapter;
+import com.job.nutriplayapp.models.Juego;
+import com.job.nutriplayapp.models.Modulo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class JuegoActivity extends AppCompatActivity {
 
     ListView listView;
+    private RecyclerView juegosList;
     private DatabaseReference mDatabase;
     private String pregunta_id;
-    private ArrayList<String> content = new ArrayList<>();
+    private List<Juego> juegos = new ArrayList<Juego>();
     private int n = 0;
     ProgressDialog progress;
-    private String uid= "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
+    private String uid;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
 
-        listView = findViewById(R.id.listView);
+        juegosList = (RecyclerView) findViewById(R.id.juegos_list);
         progress = new ProgressDialog(this);
         progress.setTitle("Cargando");
         progress.setMessage("Por favor espere...");
         progress.setCancelable(false);
         progress.show();
 
-        //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        //uid = currentUser.getUid();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        uid = currentUser.getUid();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("juego").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -57,12 +68,16 @@ public class JuegoActivity extends AppCompatActivity {
                                 boolean estado = dsp.getValue(Boolean.class);
 
 
-                                if (estado == true) {
+                                if (estado) {
                                     String id_juego = dsp.getKey();
                                     if (ds.getKey().equals(id_juego)) {
-                                        content.add(ds.child("titulo").getValue(String.class));
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(JuegoActivity.this, android.R.layout.simple_list_item_1, content);
-                                        listView.setAdapter(adapter);
+                                        Juego game = ds.getValue(Juego.class);
+                                        game.setId(ds.getKey());
+                                        juegos.add(game);
+                                        JuegoAdapter adapter = new JuegoAdapter(JuegoActivity.this);
+                                        adapter.setJuegos(juegos);
+                                        juegosList.setLayoutManager(new GridLayoutManager(getBaseContext(), 3));
+                                        juegosList.setAdapter(adapter);
                                     }
                                 }
                             }
@@ -74,7 +89,6 @@ public class JuegoActivity extends AppCompatActivity {
 
                         }
                     });
-                    //  Log.d("id_re", ds.getKey());
                 }
             }
 
@@ -83,19 +97,5 @@ public class JuegoActivity extends AppCompatActivity {
 
             }
         });
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Intent intent = new Intent(JuegoActivity.this, DetalleJuegoActivity.class);
-                intent.putExtra("titulo", content.get(i));
-                startActivity(intent);
-                finish();
-
-            }
-        });
-
     }
 }
