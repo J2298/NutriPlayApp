@@ -48,6 +48,9 @@ public class ModuloDetalleActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnVolver, btnSiguiente;
     private Modulo modulo;
+    private Boolean realizado=false;
+    private DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class ModuloDetalleActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_modulo_detalle);
 
+        modulo = getIntent().getExtras().getParcelable("Modulo");
 
         //Inicialización de la librería de fuentes de texto
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/Overlock-Regular.ttf").setFontAttrId(R.attr.fontPath).build());
@@ -68,9 +72,6 @@ public class ModuloDetalleActivity extends AppCompatActivity {
         btnVolver = (Button) findViewById(R.id.btn_volver);
         btnSiguiente = (Button) findViewById(R.id.btn_siguiente);
 
-
-        /*texto1 = findViewById(R.id.text_cont_1);
-        texto2 = findViewById(R.id.text_cont_2);*/
 
         //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         uid = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
@@ -126,36 +127,22 @@ public class ModuloDetalleActivity extends AppCompatActivity {
             }
         });
 
-        final DatabaseReference userData = FirebaseDatabase.getInstance().getReference();
-        userData.child("modulo").addValueEventListener(new ValueEventListener() {
+
+        myViewPagerAdapter = new MyViewPagerAdapter(layouts,ModuloDetalleActivity.this,modulo);
+        viewPager.setAdapter(myViewPagerAdapter);
+        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("coleccion_modulo").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (final DataSnapshot ds : dataSnapshot.getChildren()){
-                    userData.child("coleccion_modulo").child(uid).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot dsp : dataSnapshot.getChildren()){
-                                if(ds.getKey().equals(dsp.getKey())){
-                                    modulo = ds.getValue(Modulo.class);
-                                    Log.d("modulo", modulo.toString());
-                                    Log.d("contenido1", modulo.getContenido().getTexto1());
-
-                                    /****************************/
-                                    myViewPagerAdapter = new MyViewPagerAdapter(layouts,ModuloDetalleActivity.this,modulo);
-                                    viewPager.setAdapter(myViewPagerAdapter);
-                                    viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-
-                                }
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (ds.getKey().equals(modulo.getId())){
+                        realizado = ds.getValue(Boolean.class);
+                    }
+                    Log.d("ModuloDetalleActivity",""+ds.getValue(Boolean.class));
                 }
+                Log.d("ModuloDetalleActivity",dataSnapshot.getValue().toString());
             }
 
             @Override
@@ -163,8 +150,6 @@ public class ModuloDetalleActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
     private void addPuntosInferiores(int currentPage) {
@@ -204,10 +189,15 @@ public class ModuloDetalleActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
             addPuntosInferiores(position);
 
+            Log.d("ModuloDetalleActivity2",""+realizado);
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
-                btnSiguiente.setText("¡GANA MONEDAS!");
+                if (realizado){
+                    btnSiguiente.setVisibility(View.GONE);
+                }else{
+                    btnSiguiente.setText("¡GANA MONEDAS!");
+                }
                 btnVolver.setText("ATRÁS");
             } else {
                 // still pages are left

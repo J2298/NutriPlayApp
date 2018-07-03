@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,8 +18,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.job.nutriplayapp.R;
 import com.job.nutriplayapp.models.Modulo;
+import com.job.nutriplayapp.models.Usuario;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -34,11 +44,15 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
     private RadioButton primera_opcion_p1,segunda_opcion_p1,tercera_opcion_p1,primera_opcion_p2,segunda_opcion_p2,tercera_opcion_p2,primera_opcion_p3,segunda_opcion_p3,tercera_opcion_p3;
     private Dialog popupModuloCulminado;
     private Button botonAceptar;
+    private String uid;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modulo_cuestionario);
+
+        uid = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
 
         //Inicialización de la librería de fuentes de texto
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/Overlock-Regular.ttf").setFontAttrId(R.attr.fontPath).build());
@@ -77,9 +91,17 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
         segunda_opcion_p3.setText(modulo.getPregunta3().getAlternativa2().getNombre());
         tercera_opcion_p3.setText(modulo.getPregunta3().getAlternativa3().getNombre());
 
+
+
         //Inicialización del PopUp
         popupModuloCulminado = new Dialog(this);
         popupModuloCulminado.setCanceledOnTouchOutside(false);
+
+        popupModuloCulminado.setContentView(R.layout.modulo_culminado_popup);
+        botonAceptar = (Button)popupModuloCulminado.findViewById(R.id.botonAceptar);
+        ganaste_cantidad = (TextView)popupModuloCulminado.findViewById(R.id.ganaste_cantidad);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
     }
 
@@ -141,21 +163,77 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
         }
     }
 
-    public void MostrarPopUpDescubierto(int cantidad){
-        popupModuloCulminado.setContentView(R.layout.modulo_culminado_popup);
-        botonAceptar = (Button)popupModuloCulminado.findViewById(R.id.botonAceptar);
-        ganaste_cantidad = (TextView)popupModuloCulminado.findViewById(R.id.ganaste_cantidad);
+    public void MostrarPopUpDescubierto(final int cantidad){
 
         ganaste_cantidad.setText("¡Felicidades!, ganaste: "+String.valueOf(cantidad));
+
+        mDatabase.child("usuario").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                int experiencia = usuario.getExp();
+                int monedas = usuario.getMonedas();
+
+                int total_monedas = monedas + cantidad;
+                Log.d("ModuloDetalleActivity","Ganó: "+total_monedas);
+
+                /*mDatabase.child("usuario").child(uid).child("monedas").setValue(total_monedas).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Log.d("ModuloDetalleActivity","Existoso");
+                        }else{
+                            Log.e("ModuloDetalleActivity","Hubo fallos");
+                        }
+                    }
+                });*/
+
+                /*int total_experiencia = experiencia + 250;
+
+                mDatabase.child("usuario").child(uid).child("exp").setValue(total_experiencia).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Log.d("ModuloDetalleActivity","Existoso");
+                        }else{
+                            Log.e("ModuloDetalleActivity","Hubo fallos");
+                        }
+                    }
+                });
+
+                mDatabase.child("coleccion_modulo").child(uid).child(modulo.getId()).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Log.d("ModuloDetalleActivity","Existoso");
+                        }else{
+                            Log.e("ModuloDetalleActivity","Hubo fallos");
+                        }
+                    }
+                });*/
+
+
+                Log.d("ModuloDetalleActivity",dataSnapshot.getValue().toString());
+                Log.d("ModuloDetalleActivity",usuario.getNombre());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        popupModuloCulminado.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupModuloCulminado.show();
+
         botonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupModuloCulminado.dismiss();
+                //popupModuloCulminado.cancel();
                 finish();
             }
         });
-        popupModuloCulminado.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupModuloCulminado.show();
     }
 
     @Override

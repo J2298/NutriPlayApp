@@ -81,26 +81,11 @@ public class ModulosAdapter extends RecyclerView.Adapter<ModulosAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent detalles = new Intent(view.getContext(), ModuloDetalleActivity.class);
+                detalles.putExtra("Modulo",modulo);
                 view.getContext().startActivity(detalles);
-               // detalles.putExtra("titulo", modulo.getTitulo());
-                /*String titu = modulo.getTitulo();
-                Log.d("titulo: ", titu);
-               Log.d("modulo ", modulo.toString());
-               for (int i=0 ; i < modulo.getContenido().size() ; i++) {
-                   if (modulo.getContenido().get(i) != null){
-                       String texto = modulo.getContenido().get(i).getTexto();
-                       Log.d("texto"+i, texto);
-                   }
-               }
 
-               // detalles.putExtra("texto1", text1);
-               // view.getContext().startActivity(detalles);*/
             }
         });
-
-        /*Context context = viewHolder.itemView.getContext();
-        int idRes = context.getResources().getIdentifier(modulo.getPicture(), "drawable", context.getPackageName());
-        viewHolder.picture.setImageResource(idRes);*/
 
     }
 
