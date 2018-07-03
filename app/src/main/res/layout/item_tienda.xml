@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -8,59 +9,71 @@
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="8dp"
-    app:contentPadding="5dp">
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </android.support.constraint.ConstraintLayout>
+    app:contentPadding="5dp"
+    tools:ignore="MissingPrefix">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/picture_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="16dp"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_launcher_background" />
+        <LinearLayout
 
-        <TextView
-            android:id="@+id/titulo_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/picture_image"
-            android:text="Título de receta"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/desc_text"
-            android:layout_width="143dp"
-            android:layout_height="46dp"
-            android:layout_below="@+id/titulo_text"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/picture_image"
-            android:text="Descripcion"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/btnComprar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/picture_image"
-            android:layout_alignEnd="@+id/titulo_text"
-            android:layout_below="@+id/titulo_text"
-            android:layout_toEndOf="@+id/desc_text"
-            android:drawableLeft="@drawable/ic_coin"
-            android:text="20"
-            android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:orientation="horizontal">
+            <TextView
+                fontPath="fonts/IBMPlexSans-Bold.ttf"
+                android:id="@+id/titulo_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:textColor="#FFFFFF"
+                android:text="Título"
+                android:textSize="25sp"
+                android:layout_weight="5"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/btnComprar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="15dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#52BE80">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/moneda"/>
+                    <TextView
+                        android:id="@+id/cantidad_monedas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp"
+                        android:text="20"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
 
     </RelativeLayout>
-
 </android.support.v7.widget.CardView>

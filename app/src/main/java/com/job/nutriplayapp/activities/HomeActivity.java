@@ -186,6 +186,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void goToColeccion(View view) {
+        Intent intent = new Intent(this, ListaAlimentosActivity.class);
+        startActivity(intent);
         Log.d("Modulo", "Yendo a Coleccion");
     }
 

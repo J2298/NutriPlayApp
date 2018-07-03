@@ -1,5 +1,7 @@
 package com.job.nutriplayapp.fragments;
 
+import android.app.ProgressDialog;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,7 +31,8 @@ public class TiendaFragment extends Fragment {
     private RecyclerView misrecetasList;
     private DatabaseReference mDatabase;
     private List<Receta> recetas = new ArrayList<>();
-    private String uid= "Ybg1r40z6jW05KYxljglbPSIHDf2";
+    private String uid= "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
+    private ProgressDialog progress;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,18 +43,26 @@ public class TiendaFragment extends Fragment {
         //uid = currentUser.getUid();
 
         misrecetasList = (RecyclerView) view.findViewById(R.id.tiendaLista);
+
+        progress = new ProgressDialog(getContext());
+        progress.setTitle("Cargando");
+        progress.setMessage("Por favor espere...");
+        progress.setCancelable(false);
+        progress.show();
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("receta").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        recetas.removeAll(recetas);
                         for (final DataSnapshot ds : dataSnapshot.getChildren()) {
                             mDatabase.child("coleccion_receta").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                                         boolean estado = dsp.getValue(Boolean.class);
-                                        if (estado == false) {
+                                        if (!estado) {
                                             String id_receta = dsp.getKey();
                                             if (ds.getKey().equals(id_receta)) {
                                                 Log.d("Accion", "Añadiendo receta a la tienda..");
@@ -66,6 +77,7 @@ public class TiendaFragment extends Fragment {
                                             }
                                         }
                                     }
+                                    progress.dismiss();
                                 }
 
                                 @Override
@@ -87,6 +99,8 @@ public class TiendaFragment extends Fragment {
 
         return view;
     }
+
+
     public void back() {
         getActivity().onBackPressed();
     }

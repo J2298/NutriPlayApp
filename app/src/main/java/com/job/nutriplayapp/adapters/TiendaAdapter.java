@@ -1,6 +1,8 @@
 package com.job.nutriplayapp.adapters;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +33,7 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
     private List<Receta> recetas;
     private DatabaseReference mDatabase;
     private TiendaAdapter adapter;
+    private String uid= "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
     public TiendaAdapter(){
         this.recetas = new ArrayList<>();
         this.adapter = this;
@@ -40,16 +45,15 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView picture;
-        public TextView titulo;
-        public TextView descripcion;
-        public Button btnComprar;
+        public TextView titulo,cantidad_monedas;
+        public CardView btnComprar;
 
         public ViewHolder(View itemView) {
             super(itemView);
             picture = (ImageView) itemView.findViewById(R.id.picture_image);
             titulo = (TextView) itemView.findViewById(R.id.titulo_text);
-            descripcion = (TextView) itemView.findViewById(R.id.desc_text);
-            btnComprar = itemView.findViewById(R.id.btnComprar);
+            cantidad_monedas = (TextView)itemView.findViewById(R.id.cantidad_monedas);
+            btnComprar = (CardView) itemView.findViewById(R.id.btnComprar);
         }
     }
     @Override
@@ -63,38 +67,27 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
     public void onBindViewHolder(final TiendaAdapter.ViewHolder viewHolder, int position) {
         final Receta receta = this.recetas.get(position);
         viewHolder.titulo.setText(receta.getTitulo());
-        viewHolder.descripcion.setText(receta.getDescripcion());
-
+        viewHolder.cantidad_monedas.setText(String.valueOf(receta.getMoneda()));
         Picasso.get().load(receta.getImagen()).into(viewHolder.picture);
-
 
         viewHolder.btnComprar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 Log.d("Tienda", "Comprando..");
 
-                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                final String uid = currentUser.getUid();
+                /*FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                final String uid = currentUser.getUid();*/
                 mDatabase = FirebaseDatabase.getInstance().getReference();
-                mDatabase.child("coleccion").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabase.child("coleccion_receta").child(uid).child(receta.getId()).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                            String id_receta = receta.getId();
-                            if (dsp.getKey().equals(id_receta)){
-                                Log.d("Compra", "Agregando receta " + dsp.getKey() + " a Mis Recetas");
-                                dsp.getRef().setValue(true);
-                                ((Activity)view.getContext()).finish();
-                                view.getContext().startActivity(((Activity)view.getContext()).getIntent());
-
-                            }
-
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            ((Activity)view.getContext()).finish();
+                            view.getContext().startActivity(((Activity)view.getContext()).getIntent());
+                            Log.d("TiendaAdapter","Existoso");
+                        }else{
+                            Log.e("TiendaAdapter","Hubo fallos");
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
             }

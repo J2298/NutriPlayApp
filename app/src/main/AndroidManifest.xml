@@ -3,7 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.job.nutriplayapp">
 
+    <!-- Permiso para acceso a la camara del dispositivo -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Permiso de lectura y escritura al almacenamiento externo del dispositivo -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- Acceso a internet para Picasso e IBM-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Acceso al estado de conexión a internet-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -35,7 +43,7 @@
 
         <activity
             android:name=".activities.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,11 +61,19 @@
         <activity android:name=".activities.RecetaActivity" />
         <activity android:name=".activities.AvatarActivity" />
         <activity android:name=".activities.ModuloCuestionarioActivity" />
-        <activity android:name=".jobsdetallereceta" />
+        <activity
+            android:name=".jobsdetallereceta"
+            android:parentActivityName=".activities.RecetaActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.RecetaActivity" />
+        </activity>
         <!--
         <activity android:name=".fragments.IngredientesFragment" />
         <activity android:name=".fragments.PreparacionFragment">
         -->
+        <activity android:name=".activities.ListaAlimentosActivity" />
+        <activity android:name=".activities.DetalleAlimentoActivity"></activity>
     </application>
 
 </manifest>

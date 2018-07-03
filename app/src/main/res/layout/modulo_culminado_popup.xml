@@ -31,7 +31,6 @@
                 android:layout_marginBottom="25dp">
 
                 <TextView
-                    fontPath="fonts/dosis-semibold.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -72,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:text="Aceptar"
                     android:textColor="#FFF"
-                    android:background="@drawable/boton_verde_redondo"
+                    android:background="@color/colorPrimary"
                     android:layout_marginTop="15dp"
                     android:layout_gravity="center_horizontal"/>
 

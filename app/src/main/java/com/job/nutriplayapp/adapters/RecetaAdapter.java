@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,7 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         final Receta receta = this.recetas.get(position);
         viewHolder.titulo.setText(receta.getTitulo());
-        viewHolder.descripcion.setText(receta.getDescripcion());
+        //viewHolder.descripcion.setText(receta.getDescripcion());
 
         Picasso.get().load(receta.getImagen()).into(viewHolder.picture);
 
@@ -67,7 +68,6 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.ViewHolder
                 Intent i1 = new Intent(view.getContext(), jobsdetallereceta.class);
                 i1.putExtra("imagen", receta.getImagen());
                 i1.putExtra("titulo", receta.getTitulo());
-
                 i1.putExtra("ingredientes", receta.getIngredientes());
                 i1.putExtra("contenido", receta.getContenido());
                 view.getContext().startActivity(i1);

@@ -26,6 +26,10 @@
     <color name="colorSecondaryText">#e8f5e9</color>
     <color name="transparent_white_75">#BF84A770</color>
 
+    <color name="white">#fafafa</color>
+    <color name="white_pressed">#B6B1AF</color>
+
+
     <color name="fondo_historia1">#20d2bb</color>
     <color name="fondo_historia2">#f64c73</color>
 

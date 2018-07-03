@@ -1,6 +1,7 @@
 package com.job.nutriplayapp.fragments;
 
 import android.app.ProgressDialog;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,6 +56,7 @@ public class MisRecetasFragment extends Fragment {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        recetas.removeAll(recetas);
                         for (final DataSnapshot ds : dataSnapshot.getChildren()) {
                             mDatabase.child("coleccion_receta").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -62,7 +64,7 @@ public class MisRecetasFragment extends Fragment {
                                     for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                                         boolean estado = dsp.getValue(Boolean.class);
 
-                                        if (estado == true){
+                                        if (estado){
                                             String id_receta = dsp.getKey();
                                             if (ds.getKey().equals(id_receta)) {
                                                 Receta receta = ds.getValue(Receta.class);
@@ -88,18 +90,6 @@ public class MisRecetasFragment extends Fragment {
                             //  Log.d("id_re", ds.getKey());
 
                         }
-
-                        /*
-                        ListAdapter adapter = new ListAdapter();
-
-                       // recetas.add(new com.job.nutriplayapp.models.Receta("Pollo con Verduras", "Descripcionn"));
-                        adapter.setRecetas(recetas);
-
-                        misrecetasList.setAdapter(adapter);
-                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                        misrecetasList.setLayoutManager(layoutManager);*/
-                        //  com.job.nutriplayapp.models.Receta receta = dataSnapshot.getValue(com.job.nutriplayapp.models.Receta.class);
-
                     }
 
                     @Override
@@ -109,4 +99,5 @@ public class MisRecetasFragment extends Fragment {
                 });
         return view;
     }
+
 }
