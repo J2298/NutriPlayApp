@@ -204,28 +204,6 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(i1);
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_logout:
-                callLogout(null);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
-
-    /*private void callLogout(View view) {
-        Log.d(TAG, "Sesion Cerrada");
-        FirebaseAuth.getInstance().signOut();
-        LoginManager.getInstance().logOut();
-        finish();
-    }*/
-
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
