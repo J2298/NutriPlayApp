@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Log.d(LGN, "Falla de conexion: " + connectionResult);
+                        Log.d(LGN, " Falla de conexion : " + connectionResult);
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
