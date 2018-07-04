@@ -382,7 +382,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("sas", "Antiguo");
                         Intent home = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(home);
-                    }else{
+                    } else {
                         Log.d("sas", "nuevo");
                         Intent home = new Intent(LoginActivity.this, AvatarActivity.class);
                         startActivity(home);
@@ -429,7 +429,29 @@ public class LoginActivity extends AppCompatActivity {
                                                                             String id_modulo = dsps.getKey();
                                                                             Log.d("idsmodulos: ", id_modulo);
                                                                             DatabaseReference coleccionModulo = FirebaseDatabase.getInstance().getReference("coleccion_modulo");
-                                                                            coleccionModulo.child(uidx).child(id_modulo).setValue(true);
+                                                                            coleccionModulo.child(uidx).child(id_modulo).setValue(true)
+                                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                        @Override
+                                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                                            mDatabase.child(("alimento")).addValueEventListener(new ValueEventListener() {
+                                                                                                @Override
+                                                                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                                                    for (DataSnapshot daSnap : dataSnapshot.getChildren()) {
+                                                                                                        String id_alimento = daSnap.getKey();
+                                                                                                        DatabaseReference coleccionAlimento = FirebaseDatabase.getInstance().getReference("coleccion_alimento");
+                                                                                                        coleccionAlimento.child(uidx).child(id_alimento).setValue(false);
+                                                                                                    }
+
+                                                                                                }
+
+                                                                                                @Override
+                                                                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                                                                }
+                                                                                            });
+
+                                                                                        }
+                                                                                    });
                                                                         }
                                                                     }
 
