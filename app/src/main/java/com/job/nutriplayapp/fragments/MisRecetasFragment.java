@@ -33,12 +33,16 @@ public class MisRecetasFragment extends Fragment {
     private List<Receta> recetas = new ArrayList<>();
     private ProgressDialog progress;
 
-    private String uid= "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
+    private String uid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_mis_recetas, container, false);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        uid = user.getUid();
+        //uid = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
 
         misrecetasList = (RecyclerView) view.findViewById(R.id.recetasLista);
 
@@ -47,9 +51,6 @@ public class MisRecetasFragment extends Fragment {
         progress.setMessage("Por favor espere...");
         progress.setCancelable(false);
         progress.show();
-
-        //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        //uid = currentUser.getUid();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("receta").addListenerForSingleValueEvent(

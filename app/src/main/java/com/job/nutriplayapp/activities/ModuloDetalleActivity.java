@@ -73,8 +73,10 @@ public class ModuloDetalleActivity extends AppCompatActivity {
         btnSiguiente = (Button) findViewById(R.id.btn_siguiente);
 
 
-        //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        uid = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        uid = user.getUid();
+        //uid = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
+
         String titulo = getIntent().getExtras().getString("titulo");
         final String cont_texto1 = getIntent().getExtras().getString("texto1");
 /*

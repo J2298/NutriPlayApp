@@ -37,7 +37,7 @@ public class ModuloFragment extends Fragment {
     private RecyclerView modulosList;
     private DatabaseReference mDatabase;
     private  List<Modulo> modulos = new ArrayList<Modulo>();
-    private String uid= "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
+    private String uid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,8 +48,9 @@ public class ModuloFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_modulo, container, false);
         modulosList = (RecyclerView)view.findViewById(R.id.modulos_list);
 
-        //FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        //uid = currentUser.getUid();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        uid = user.getUid();
+        //uid = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("modulo").addListenerForSingleValueEvent(

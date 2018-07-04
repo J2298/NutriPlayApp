@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,7 +54,9 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modulo_cuestionario);
 
-        uid = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        uid = user.getUid();
+        //uid = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
 
         //Inicialización de la librería de fuentes de texto
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/Overlock-Regular.ttf").setFontAttrId(R.attr.fontPath).build());
@@ -167,7 +171,8 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
 
         ganaste_cantidad.setText("¡Felicidades!, ganaste: "+String.valueOf(cantidad));
 
-        mDatabase.child("usuario").child(uid).addValueEventListener(new ValueEventListener() {
+        //Una solo vez
+        mDatabase.child("usuario").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
@@ -177,7 +182,7 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
                 int total_monedas = monedas + cantidad;
                 Log.d("ModuloDetalleActivity","Ganó: "+total_monedas);
 
-                /*mDatabase.child("usuario").child(uid).child("monedas").setValue(total_monedas).addOnCompleteListener(new OnCompleteListener<Void>() {
+                mDatabase.child("usuario").child(uid).child("monedas").setValue(total_monedas).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
@@ -186,9 +191,9 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
                             Log.e("ModuloDetalleActivity","Hubo fallos");
                         }
                     }
-                });*/
+                });
 
-                /*int total_experiencia = experiencia + 250;
+                int total_experiencia = experiencia + 250;
 
                 mDatabase.child("usuario").child(uid).child("exp").setValue(total_experiencia).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -210,7 +215,7 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
                             Log.e("ModuloDetalleActivity","Hubo fallos");
                         }
                     }
-                });*/
+                });
 
 
                 Log.d("ModuloDetalleActivity",dataSnapshot.getValue().toString());
@@ -230,7 +235,6 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 popupModuloCulminado.dismiss();
-                //popupModuloCulminado.cancel();
                 finish();
             }
         });

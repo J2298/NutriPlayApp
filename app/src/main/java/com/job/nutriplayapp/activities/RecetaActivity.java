@@ -59,6 +59,8 @@ public class RecetaActivity extends AppCompatActivity {
             }
         });
 
+        setFragment(misRecetasFragment);
+
     }
 
 

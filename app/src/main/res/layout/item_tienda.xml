@@ -9,7 +9,6 @@
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="8dp"
-    app:contentPadding="5dp"
     tools:ignore="MissingPrefix">
 
     <RelativeLayout
@@ -49,7 +48,7 @@
                 app:cardElevation="15dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#52BE80">
+                app:cardBackgroundColor="@color/colorPrimary">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

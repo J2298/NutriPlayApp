@@ -1,5 +1,6 @@
 package com.job.nutriplayapp.activities;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -28,6 +30,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +48,7 @@ import com.job.nutriplayapp.R;
 import com.job.nutriplayapp.adapters.AlimentosAdapter;
 import com.job.nutriplayapp.models.Alimento;
 import com.job.nutriplayapp.models.CategoriaValor;
+import com.job.nutriplayapp.models.Usuario;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -54,6 +59,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ru.dimorinny.showcasecard.ShowCaseView;
+import ru.dimorinny.showcasecard.position.ViewPosition;
+import ru.dimorinny.showcasecard.radius.Radius;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -62,7 +70,7 @@ public class ListaAlimentosActivity extends AppCompatActivity {
     private RecyclerView recyclerViewAlimento;
     private List<Alimento> alimentos;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference,databaseReference2,databaseReference3;
+    private DatabaseReference databaseReference,databaseReference2,databaseReference3,databaseReference4,databaseReference5;
     private AlimentosAdapter adapter;
     private Map<String,Boolean> coleccion_alimentos;
     private Map<String,String> id_alimentos;
@@ -78,12 +86,16 @@ public class ListaAlimentosActivity extends AppCompatActivity {
     private CategoriaValor categoriaValor;
 
     //PRUEBA
-    private String uid_usuario="uX9yWXRpKcaC1JnupQ1IoODzjBr2";
+    private String uid_usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alimentos);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        uid_usuario = user.getUid();
+        //uid_usuario = "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
@@ -100,6 +112,7 @@ public class ListaAlimentosActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference("alimento");
         databaseReference2 = firebaseDatabase.getReference("coleccion_alimento");
         databaseReference3 = firebaseDatabase.getReference("categoria_valor");
+        databaseReference4 = firebaseDatabase.getReference("usuario");
         //Inicialización del PopUp
         popupDescubierto = new Dialog(this);
         popupDescubierto.setCanceledOnTouchOutside(false);
@@ -163,6 +176,26 @@ public class ListaAlimentosActivity extends AppCompatActivity {
 
             }
         });
+
+        //aa
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                try {
+                    new ShowCaseView.Builder(ListaAlimentosActivity.this)
+                            .withTypedPosition(new ViewPosition(ListaAlimentosActivity.this.findViewById(R.id.tomar_foto)))
+                            .withTypedRadius(new Radius(360F))
+                            .withContent("Ahora puedes coleccionar alimentos, presiona el botón y búscalos!")
+                            .withDismissListener(new ShowCaseView.DismissListener() {
+                                @Override
+                                public void onDismiss() {
+                                    //PreferencesManager.getInstance().set(PreferencesManager.PREF_TOURVIEWED, "1");
+                                }
+                            })
+                            .build()
+                            .show(ListaAlimentosActivity.this);
+                }catch (Throwable t){}
+            }
+        }, 1000);
     }
 
 
@@ -337,29 +370,52 @@ public class ListaAlimentosActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
-    public void MostrarPopUpDescubierto(Alimento alimento,CategoriaValor categoriaValor){
+    public void MostrarPopUpDescubierto(Alimento alimento, final CategoriaValor categoriaValor){
         popupDescubierto.setContentView(R.layout.descubiertopopup);
         botonAceptar = (Button)popupDescubierto.findViewById(R.id.botonAceptar);
         ganaste_cantidad = (TextView)popupDescubierto.findViewById(R.id.ganaste_cantidad);
         alimento_popup = (ImageView)popupDescubierto.findViewById(R.id.alimento_popup);
-        Target target = new Target() {
+
+        Picasso.get().load(alimento.getImagen()).into(alimento_popup);
+
+        databaseReference4.child(uid_usuario).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                alimento_popup.setImageBitmap(bitmap);
-                Drawable image = alimento_popup.getDrawable();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                int experiencia = usuario.getExp();
+                int monedas = usuario.getMonedas();
+                Log.d("TiendaAdapter","entra");
+                Log.d("TiendaAdapter",""+monedas);
+                int total_monedas = monedas + categoriaValor.getMoneda();
+                int total_experiencia = experiencia+80;
+
+                    databaseReference4.child(uid_usuario).child("monedas").setValue(total_monedas).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Log.d("ModuloDetalleActivity","Existoso");
+                            }else{
+                                Log.e("ModuloDetalleActivity","Hubo fallos");
+                            }
+                        }
+                    });
+                    databaseReference4.child(uid_usuario).child("exp").setValue(total_experiencia).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Log.d("ModuloDetalleActivity","Existoso");
+                            }else{
+                                Log.e("ModuloDetalleActivity","Hubo fallos");
+                            }
+                        }
+                    });
             }
 
             @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
-        Picasso.get().load(alimento.getImagen()).into(target);
+        });
 
         ganaste_cantidad.setText("¡Felicidades!, ganaste: "+String.valueOf(categoriaValor.getMoneda()));
         botonAceptar.setOnClickListener(new View.OnClickListener() {

@@ -8,9 +8,9 @@
     <!-- Permiso de lectura y escritura al almacenamiento externo del dispositivo -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- Acceso a internet para Picasso e IBM-->
+    <!-- Acceso a internet para Picasso e IBM -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Acceso al estado de conexión a internet-->
+    <!-- Acceso al estado de conexión a internet -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -43,14 +43,9 @@
 
         <activity
             android:name=".activities.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.HomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".activities.HomeActivity"></activity>
         <activity android:name=".activities.ModuloDetalleActivity" />
         <activity android:name=".PreguntaActivity" />
         <activity android:name=".FelicidadesActivity" />
@@ -73,7 +68,19 @@
         <activity android:name=".fragments.PreparacionFragment">
         -->
         <activity android:name=".activities.ListaAlimentosActivity" />
-        <activity android:name=".activities.DetalleAlimentoActivity"></activity>
+        <activity android:name=".activities.DetalleAlimentoActivity"
+            android:parentActivityName=".activities.ListaAlimentosActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ListaAlimentosActivity" />
+        </activity>
+        <activity android:name=".activities.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

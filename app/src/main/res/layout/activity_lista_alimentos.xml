@@ -6,7 +6,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".actividades.ListaAlimentosActivity"
+    tools:context=".activities.ListaAlimentosActivity"
     tools:ignore="MissingPrefix">
     <RelativeLayout
         android:layout_width="match_parent"

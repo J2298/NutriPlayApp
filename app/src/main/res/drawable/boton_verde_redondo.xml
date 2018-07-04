@@ -4,5 +4,5 @@
     <corners
         android:radius="@dimen/radio_boton"/>
     <solid
-        android:color="@color/colorPrimary"/>
+        android:color="@color/colorSecondary"/>
 </shape>

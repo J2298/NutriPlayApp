@@ -30,7 +30,7 @@ public class IngredientesFragment extends Fragment {
 
         List<String> ingredientesList = Arrays.asList(getArguments().getString("prueba").split(","));
         for( int i = 0; i < ingredientesList.size(); i++){
-            ingredientes.append(ingredientesList.get(i)+"\n");
+            ingredientes.append(ingredientesList.get(i)+System.getProperty("line.separator"));
         }
         return view;
     }

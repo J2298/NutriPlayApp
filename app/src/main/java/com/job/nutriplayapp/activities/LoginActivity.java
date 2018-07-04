@@ -1,6 +1,8 @@
 package com.job.nutriplayapp.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -67,13 +69,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private EditText emailInput;
-    private EditText passwordInput;
     private String correo, uid;
 
     private void initFirebaseAuth() {
         mAuth = FirebaseAuth.getInstance();
-        emailInput = (EditText) findViewById(R.id.email_input);
-        passwordInput = (EditText) findViewById(R.id.password_input);
     }
 
 
@@ -103,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Log.d(LGN, "Falla de conexion: " + connectionResult);
+                        Log.d(LGN, " Falla de conexion : " + connectionResult);
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -218,6 +217,9 @@ public class LoginActivity extends AppCompatActivity {
             if (requestCode == GOOGLE_SIGNIN_REQUEST) {
                 Log.d(LGN, "Respuesta de Google");
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                Log.d(LGN, result.getStatus() + "");
+                Log.d(LGN, resultCode + "");
+                Log.d(LGN, data + "");
                 if (result.isSuccess()) {
                     Log.d(LGN, "Respuesta Buena");
                     GoogleSignInAccount user = result.getSignInAccount();
@@ -301,9 +303,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //Login Normal de Firebase
     public void callLogin(View view) {
-        String email = emailInput.getText().toString();
-        String password = passwordInput.getText().toString();
-
+    /*
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Ingrese campos", Toast.LENGTH_SHORT).show();
             return;
@@ -327,10 +327,10 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Email o Contraseña Incorrectos", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });*/
     }
 
-    public void callRegister(View view) {
+    public void callRegister(View view) {/*
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
 
@@ -357,7 +357,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Creacion Fallida", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });*/
     }
 
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -372,8 +372,17 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     Log.d(LGN, "Sesion iniciada: " + user.getUid());
                     Log.d(LGN, "Usuario: " + user.getDisplayName());
-                    Intent home = new Intent(LoginActivity.this, AvatarActivity.class);
-                    startActivity(home);
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    if (sp.getBoolean("tiene_avatar", false)) {
+                        Log.d("sas", "Antiguo");
+                        Intent home = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(home);
+                    } else {
+                        Log.d("sas", "nuevo");
+                        Intent home = new Intent(LoginActivity.this, AvatarActivity.class);
+                        startActivity(home);
+                    }
+
                     finish();
                 } else {
                     Log.d(LGN, "Sesion cerada");
@@ -393,7 +402,7 @@ public class LoginActivity extends AppCompatActivity {
                     String id_receta = ds.getKey();
                     Log.d("ids", id_receta);
                     DatabaseReference coleccionReceta = FirebaseDatabase.getInstance().getReference("coleccion_receta");
-                    coleccionReceta.child(uidx).child(id_receta).setValue(true)
+                    coleccionReceta.child(uidx).child(id_receta).setValue(false)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -415,7 +424,29 @@ public class LoginActivity extends AppCompatActivity {
                                                                             String id_modulo = dsps.getKey();
                                                                             Log.d("idsmodulos: ", id_modulo);
                                                                             DatabaseReference coleccionModulo = FirebaseDatabase.getInstance().getReference("coleccion_modulo");
-                                                                            coleccionModulo.child(uidx).child(id_modulo).setValue(true);
+                                                                            coleccionModulo.child(uidx).child(id_modulo).setValue(true)
+                                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                        @Override
+                                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                                            mDatabase.child(("alimento")).addValueEventListener(new ValueEventListener() {
+                                                                                                @Override
+                                                                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                                                    for (DataSnapshot daSnap : dataSnapshot.getChildren()) {
+                                                                                                        String id_alimento = daSnap.getKey();
+                                                                                                        DatabaseReference coleccionAlimento = FirebaseDatabase.getInstance().getReference("coleccion_alimento");
+                                                                                                        coleccionAlimento.child(uidx).child(id_alimento).setValue(false);
+                                                                                                    }
+
+                                                                                                }
+
+                                                                                                @Override
+                                                                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                                                                }
+                                                                                            });
+
+                                                                                        }
+                                                                                    });
                                                                         }
                                                                     }
 
@@ -444,7 +475,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -458,20 +488,7 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

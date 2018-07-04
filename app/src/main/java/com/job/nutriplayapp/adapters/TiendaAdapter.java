@@ -1,6 +1,7 @@
 package com.job.nutriplayapp.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.job.nutriplayapp.R;
 import com.job.nutriplayapp.models.Receta;
+import com.job.nutriplayapp.models.Usuario;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -33,13 +36,17 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
     private List<Receta> recetas;
     private DatabaseReference mDatabase;
     private TiendaAdapter adapter;
-    private String uid= "uX9yWXRpKcaC1JnupQ1IoODzjBr2";
-    public TiendaAdapter(){
+    private Context context;
+    private String uid= "8JUACHkI08c3NCdOdAG2eWaVFj73";
+    private String uid_obtenido;
+    public TiendaAdapter(String uid_obtenido){
         this.recetas = new ArrayList<>();
         this.adapter = this;
+        this.uid_obtenido = uid_obtenido;
     }
-    public void setRecetas(List<Receta> recetas) {
+    public void setRecetas(List<Receta> recetas,Context context) {
         this.recetas = recetas;
+        this.context = context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -78,16 +85,50 @@ public class TiendaAdapter extends RecyclerView.Adapter<TiendaAdapter.ViewHolder
                 /*FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String uid = currentUser.getUid();*/
                 mDatabase = FirebaseDatabase.getInstance().getReference();
-                mDatabase.child("coleccion_receta").child(uid).child(receta.getId()).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                mDatabase.child("usuario").child(uid_obtenido).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            ((Activity)view.getContext()).finish();
-                            view.getContext().startActivity(((Activity)view.getContext()).getIntent());
-                            Log.d("TiendaAdapter","Existoso");
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                        int experiencia = usuario.getExp();
+                        int monedas = usuario.getMonedas();
+                        Log.d("TiendaAdapter","entra");
+                        Log.d("TiendaAdapter",""+monedas);
+                        int total_monedas = monedas - receta.getMoneda();
+
+                        if (total_monedas>=0){
+                            mDatabase.child("coleccion_receta").child(uid_obtenido).child(receta.getId()).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        ((Activity)view.getContext()).finish();
+                                        view.getContext().startActivity(((Activity)view.getContext()).getIntent());
+                                        Log.d("TiendaAdapter","Existoso");
+                                    }else{
+                                        Log.e("TiendaAdapter","Hubo fallos");
+                                    }
+                                }
+                            });
+                            mDatabase.child("usuario").child(uid_obtenido).child("monedas").setValue(total_monedas).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Log.d("ModuloDetalleActivity","Existoso");
+                                    }else{
+                                        Log.e("ModuloDetalleActivity","Hubo fallos");
+                                    }
+                                }
+                            });
                         }else{
-                            Log.e("TiendaAdapter","Hubo fallos");
+                            Toast.makeText(context,"No tienes dinero suficiente para comprar más recetas",Toast.LENGTH_LONG).show();
                         }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
                     }
                 });
             }

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.job.nutriplayapp.adapters.ViewDetaAdapter;
 import com.squareup.picasso.Picasso;
@@ -19,6 +20,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class jobsdetallereceta extends AppCompatActivity {
 
     private ImageView imagenReceta;
+    private TextView nombre_receta;
     private CollapsingToolbarLayout collapsingToolbar;
 
     @Override
@@ -28,12 +30,14 @@ public class jobsdetallereceta extends AppCompatActivity {
 
         imagenReceta = (ImageView)findViewById(R.id.imagen_alimento);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        nombre_receta = (TextView)findViewById(R.id.nombre);
 
         //Inicialización de la librería de fuentes de texto
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/dosis-book.ttf").setFontAttrId(R.attr.fontPath).build());
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/PoiretOne-Regular.ttf").setFontAttrId(R.attr.fontPath).build());
 
         String titulo = getIntent().getExtras().getString("titulo");
         Picasso.get().load(getIntent().getExtras().getString("imagen")).into(imagenReceta);
+        nombre_receta.setText(titulo);
 
         //Establecimiento de propiedades para el toolbar
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -42,7 +46,7 @@ public class jobsdetallereceta extends AppCompatActivity {
 
         TabLayout detalleTab = (TabLayout) findViewById(R.id.tabDetalle);
         detalleTab.addTab(detalleTab.newTab().setText("Ingredientes"));
-        detalleTab.addTab(detalleTab.newTab().setText("Preparacion"));
+        detalleTab.addTab(detalleTab.newTab().setText("Preparación"));
         detalleTab.setTabGravity(detalleTab.GRAVITY_FILL);
 
         final ViewPager detallePager = (ViewPager) findViewById(R.id.pagerDetalle);
