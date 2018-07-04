@@ -75,7 +75,6 @@ public class DetalleJuegoActivity extends AppCompatActivity {
             alert.showDialog(DetalleJuegoActivity.this, descripcion, fallo);
         }
         borrarJuego();
-        finish();
     }
 
     public void falsoTapped(View view) {
@@ -90,7 +89,6 @@ public class DetalleJuegoActivity extends AppCompatActivity {
             alert.showDialog(DetalleJuegoActivity.this, descripcion, fallo);
         }
         borrarJuego();
-        finish();
     }
 
     public void borrarJuego() {
@@ -102,6 +100,7 @@ public class DetalleJuegoActivity extends AppCompatActivity {
                     if (dsp.getKey().equals(juego_id)) {
                         Log.d("Eliminar", "Eliminando juego " + dsp.getKey() + "de los mitos");
                         dsp.getRef().setValue(false);
+                        finish();
                     }
 
                 }
@@ -112,6 +111,6 @@ public class DetalleJuegoActivity extends AppCompatActivity {
                 Log.d("Eliminar", "Hay errores");
             }
         });
-        finish();
+
     }
 }

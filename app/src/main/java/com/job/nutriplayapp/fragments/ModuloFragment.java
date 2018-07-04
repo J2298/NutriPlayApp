@@ -61,8 +61,7 @@ public class ModuloFragment extends Fragment {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                        boolean estado = ds.getValue(Boolean.class);
-                                        if (estado) {
+
                                             String id_modulo = ds.getKey();
                                             if (dsp.getKey().equals(id_modulo)) {
                                                 Modulo modulo = dsp.getValue(Modulo.class);
@@ -75,7 +74,7 @@ public class ModuloFragment extends Fragment {
                                                 modulosList.setLayoutManager(layoutManager);
                                                 modulosList.setAdapter(adapter);
                                             }
-                                        }
+
                                     }
                                 }
 

@@ -1,6 +1,8 @@
 package com.job.nutriplayapp.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -375,8 +377,17 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     Log.d(LGN, "Sesion iniciada: " + user.getUid());
                     Log.d(LGN, "Usuario: " + user.getDisplayName());
-                    Intent home = new Intent(LoginActivity.this, AvatarActivity.class);
-                    startActivity(home);
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    if (sp.getBoolean("tiene_avatar", false)) {
+                        Log.d("sas", "Antiguo");
+                        Intent home = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(home);
+                    }else{
+                        Log.d("sas", "nuevo");
+                        Intent home = new Intent(LoginActivity.this, AvatarActivity.class);
+                        startActivity(home);
+                    }
+
                     finish();
                 } else {
                     Log.d(LGN, "Sesion cerada");
@@ -461,7 +472,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 }
-
 
 
 

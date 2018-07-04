@@ -2,6 +2,7 @@ package com.job.nutriplayapp.activities;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -185,6 +186,7 @@ public class AvatarActivity extends AppCompatActivity {
         DatabaseReference usuarioData = FirebaseDatabase.getInstance().getReference("usuario");
         uid = user.getUid();
         usuarioData.child(uid).child("avatar").setValue(url);
+
     }
 
     private void viewAvatar(Integer x, Integer y, String url) {
@@ -226,6 +228,7 @@ public class AvatarActivity extends AppCompatActivity {
     }
 
     public void goHome(View view) {
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("tiene_avatar", true).commit();
         Intent home = new Intent(this, HomeActivity.class);
         startActivity(home);
         finish();

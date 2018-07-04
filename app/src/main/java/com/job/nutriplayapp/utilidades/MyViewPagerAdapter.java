@@ -44,9 +44,9 @@ public class MyViewPagerAdapter extends PagerAdapter {
         }
 
         if (posicion == 1){
-            TextView subtitulo1 = (TextView) view.findViewById(R.id.subtitulo1);
+            TextView subtitulo1 = (TextView) view.findViewById(R.id.subtitulo3);
             subtitulo1.setText(modulo.getContenido().getSubtitulo1());
-            TextView subtitulo2 = (TextView) view.findViewById(R.id.subtitulo2);
+            TextView subtitulo2 = (TextView) view.findViewById(R.id.subtitulo4);
             subtitulo2.setText(modulo.getContenido().getSubtitulo2());
             TextView texto1 = (TextView) view.findViewById(R.id.texto1);
             texto1.setText(modulo.getContenido().getTexto1());

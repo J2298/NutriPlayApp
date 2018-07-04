@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView nombre, moneda, exp;
     private ImageView avatar;
     private String uid;
+    private CardView expC, monedas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,8 @@ public class HomeActivity extends AppCompatActivity {
         layoutMain = (ConstraintLayout) findViewById(R.id.layoutMain);
         layoutButtons = (ConstraintLayout) findViewById(R.id.layoutButtons);
         layoutContent = (ConstraintLayout) findViewById(R.id.layoutContent);
+        expC = (CardView) findViewById(R.id.cardExp);
+        monedas = (CardView) findViewById(R.id.cardMonedas);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +81,8 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Modulos"));
         tabLayout.addTab(tabLayout.newTab().setText("Dato Curioso"));
         tabLayout.addTab(tabLayout.newTab().setText("Tip del Dia"));
+        tabLayout.setTabTextColors(Color.parseColor("#ffffff"), Color.parseColor("#ffffff"));
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.mainViewer);
@@ -114,8 +121,7 @@ public class HomeActivity extends AppCompatActivity {
         userData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                nombre.setText(dataSnapshot.child("nombre").getValue().toString());
-                moneda.setText(dataSnapshot.child("monedas").getValue().toString() + " monedas");
+                moneda.setText(dataSnapshot.child("monedas").getValue().toString());
                 exp.setText(dataSnapshot.child("exp").getValue().toString() + " XP");
                 Picasso.get().load(dataSnapshot.child("avatar").getValue().toString()).into(avatar);
             }
@@ -140,6 +146,8 @@ public class HomeActivity extends AppCompatActivity {
 
             Animator animator = ViewAnimationUtils.createCircularReveal(layoutButtons, x, y, startRadius, endRadius);
             layoutButtons.setVisibility(View.VISIBLE);
+            expC.setVisibility(View.INVISIBLE);
+            monedas.setVisibility(View.INVISIBLE);
             animator.start();
 
             isOpen = true;
@@ -163,6 +171,8 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     layoutButtons.setVisibility(View.GONE);
+                    expC.setVisibility(View.VISIBLE);
+                    monedas.setVisibility(View.VISIBLE);
                 }
 
                 @Override
@@ -199,7 +209,6 @@ public class HomeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

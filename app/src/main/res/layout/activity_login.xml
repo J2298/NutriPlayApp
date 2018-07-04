@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="#ECECF8"
     tools:context=".activities.LoginActivity">
 
     <ProgressBar
@@ -20,73 +20,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/login_panel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="118dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="201dp"
+            android:layout_height="154dp"
             android:layout_marginBottom="10dp"
-            android:src="@drawable/logo"
-            app:layout_constraintBottom_toTopOf="@+id/email_input"
+            android:src="@drawable/logo_nutriplay1"
+            app:layout_constraintBottom_toTopOf="@+id/facebookButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginStart="50dp"
-            android:text="Iniciar Sesion"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/facebookButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_input" />
-
-        <EditText
-            android:id="@+id/email_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
-            android:ems="10"
-            android:hint="Usuario"
-            android:inputType="textPersonName"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/password_input"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-        <EditText
-            android:id="@+id/password_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_input" />
 
         <android.support.constraint.Group
             android:id="@+id/group"
@@ -102,6 +58,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="50dp"
             android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
             android:paddingBottom="12dp"
             android:paddingTop="12dp"
             facebook:com_facebook_login_text="Ingresar con Facebook"
@@ -110,7 +67,7 @@
             facebook:layout_constraintEnd_toEndOf="parent"
             facebook:layout_constraintHorizontal_bias="0.5"
             facebook:layout_constraintStart_toStartOf="parent"
-            facebook:layout_constraintTop_toBottomOf="@+id/button2" />
+            facebook:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/googleButton"
@@ -118,6 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="50dp"
             android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

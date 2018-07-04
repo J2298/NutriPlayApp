@@ -38,7 +38,7 @@
     android:layout_margin="20dp"
     android:clickable="true"
     android:padding="150dp"
-    app:backgroundTint="@color/fondo_historia1"
+    app:backgroundTint="@color/colorSecondaryLight"
     app:cardCornerRadius="5dp"
     app:contentPadding="10dp"
     app:srcCompat="@drawable/icon_game"
