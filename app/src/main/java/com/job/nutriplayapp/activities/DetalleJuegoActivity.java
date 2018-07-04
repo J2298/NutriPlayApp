@@ -100,7 +100,6 @@ public class DetalleJuegoActivity extends AppCompatActivity {
                     if (dsp.getKey().equals(juego_id)) {
                         Log.d("Eliminar", "Eliminando juego " + dsp.getKey() + "de los mitos");
                         dsp.getRef().setValue(false);
-                        finish();
                     }
 
                 }
