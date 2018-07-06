@@ -32,7 +32,7 @@ public class PreparacionFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_preparacion, container, false);
         contenido = (TextView)view.findViewById(R.id.conteText);
-        List<String> contenidoList = Arrays.asList(getArguments().getString("prueba").split(","));
+        List<String> contenidoList = Arrays.asList(getArguments().getString("prueba").split("-"));
         for( int i = 0; i < contenidoList.size(); i++){
             contenido.append(contenidoList.get(i)+"\n");
         }

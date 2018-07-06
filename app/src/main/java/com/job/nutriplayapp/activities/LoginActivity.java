@@ -424,7 +424,7 @@ public class LoginActivity extends AppCompatActivity {
                                                                             String id_modulo = dsps.getKey();
                                                                             Log.d("idsmodulos: ", id_modulo);
                                                                             DatabaseReference coleccionModulo = FirebaseDatabase.getInstance().getReference("coleccion_modulo");
-                                                                            coleccionModulo.child(uidx).child(id_modulo).setValue(true)
+                                                                            coleccionModulo.child(uidx).child(id_modulo).setValue(false)
                                                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                         @Override
                                                                                         public void onComplete(@NonNull Task<Void> task) {

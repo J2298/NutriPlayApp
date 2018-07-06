@@ -28,7 +28,7 @@ public class IngredientesFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_ingredientes, container, false);
         ingredientes = (TextView)view.findViewById(R.id.ingreText);
 
-        List<String> ingredientesList = Arrays.asList(getArguments().getString("prueba").split(","));
+        List<String> ingredientesList = Arrays.asList(getArguments().getString("prueba").split("-"));
         for( int i = 0; i < ingredientesList.size(); i++){
             ingredientes.append(ingredientesList.get(i)+System.getProperty("line.separator"));
         }
