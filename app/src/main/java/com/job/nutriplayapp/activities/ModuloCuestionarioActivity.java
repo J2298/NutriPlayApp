@@ -41,9 +41,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class ModuloCuestionarioActivity extends AppCompatActivity {
 
     private Modulo modulo;
-    private TextView pregunta1,pregunta2,pregunta3,ganaste_cantidad;
+    private TextView pregunta1,pregunta2,pregunta3,ganaste_cantidad,tipo_logro;
     private RadioGroup primera_pregunta,segunda_pregunta,tercera_pregunta;
     private RadioButton primera_opcion_p1,segunda_opcion_p1,tercera_opcion_p1,primera_opcion_p2,segunda_opcion_p2,tercera_opcion_p2,primera_opcion_p3,segunda_opcion_p3,tercera_opcion_p3;
+    private ImageView moneda;
     private Dialog popupModuloCulminado;
     private Button botonAceptar;
     private String uid;
@@ -104,6 +105,8 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
         popupModuloCulminado.setContentView(R.layout.modulo_culminado_popup);
         botonAceptar = (Button)popupModuloCulminado.findViewById(R.id.botonAceptar);
         ganaste_cantidad = (TextView)popupModuloCulminado.findViewById(R.id.ganaste_cantidad);
+        tipo_logro = (TextView)popupModuloCulminado.findViewById(R.id.tipo_logro);
+        moneda = (ImageView)popupModuloCulminado.findViewById(R.id.moneda);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -169,7 +172,6 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
 
     public void MostrarPopUpDescubierto(final int cantidad){
 
-        ganaste_cantidad.setText("¡Felicidades!, ganaste: "+String.valueOf(cantidad));
 
         //Una solo vez
         mDatabase.child("usuario").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -192,7 +194,14 @@ public class ModuloCuestionarioActivity extends AppCompatActivity {
                         }
                     }
                 });
-
+                if (cantidad==0){
+                    tipo_logro.setText("Fallaste");
+                    ganaste_cantidad.setText("Lo siento para la próxima te irá mejor");
+                    moneda.setVisibility(View.GONE);
+                    botonAceptar.setBackgroundResource(R.drawable.boton_verde_redondo);
+                }else {
+                    ganaste_cantidad.setText("¡Felicidades!, ganaste: " + String.valueOf(cantidad));
+                }
                 int total_experiencia = experiencia + 250;
 
                 mDatabase.child("usuario").child(uid).child("exp").setValue(total_experiencia).addOnCompleteListener(new OnCompleteListener<Void>() {

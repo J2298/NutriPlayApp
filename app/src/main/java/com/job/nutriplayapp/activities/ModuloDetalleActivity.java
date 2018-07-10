@@ -198,11 +198,13 @@ public class ModuloDetalleActivity extends AppCompatActivity {
                 if (realizado){
                     btnSiguiente.setVisibility(View.GONE);
                 }else{
+                    btnSiguiente.setTextSize(18);
                     btnSiguiente.setText("¡GANA MONEDAS!");
                 }
                 btnVolver.setText("ATRÁS");
             } else {
                 // still pages are left
+                btnSiguiente.setTextSize(15);
                 btnSiguiente.setText("SIGUIENTE");
                 btnVolver.setText("ATRÁS");
             }

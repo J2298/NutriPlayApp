@@ -31,6 +31,7 @@
                 android:layout_marginBottom="25dp">
 
                 <TextView
+                    android:id="@+id/tipo_logro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -71,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:text="Aceptar"
                     android:textColor="#FFF"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/boton_naranja_redondo"
                     android:layout_marginTop="15dp"
                     android:layout_gravity="center_horizontal"/>
 
