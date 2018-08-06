@@ -123,7 +123,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 moneda.setText(dataSnapshot.child("monedas").getValue().toString());
-                exp.setText(dataSnapshot.child("exp").getValue().toString() + " XP");
+                exp.setText(dataSnapshot.child("exp").getValue().toString());
                 Picasso.get().load(dataSnapshot.child("avatar").getValue().toString()).into(avatar);
             }
 

@@ -1,6 +1,7 @@
 package com.job.nutriplayapp.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -26,18 +27,13 @@ public class JuegoAdapter extends RecyclerView.Adapter<JuegoAdapter.ViewHolder> 
 
     private List<Juego> juegos;
 
-    private Activity activity;
+    private Context context;
 
-    public JuegoAdapter(Activity activity) {
-        this.juegos = new ArrayList<>();
-        this.activity = activity;
-    }
-
-
-    public void setJuegos(List<Juego> juegos) {
+    public JuegoAdapter(Context context,List<Juego> juegos) {
         this.juegos = juegos;
-
+        this.context = context;
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -51,7 +47,7 @@ public class JuegoAdapter extends RecyclerView.Adapter<JuegoAdapter.ViewHolder> 
 
     @Override
     public JuegoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_juego, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.item_juego, parent, false);
         ViewHolder viewHolder = new ViewHolder(itemView);
         return viewHolder;
     }
@@ -65,10 +61,10 @@ public class JuegoAdapter extends RecyclerView.Adapter<JuegoAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Log.d("as:", juego.getId()+"    aaaaaaaaaaaaaa");
-                Intent intent = new Intent(activity, DetalleJuegoActivity.class);
+                Intent intent = new Intent(context, DetalleJuegoActivity.class);
                 intent.putExtra("ID", "" + juego.getId());
 
-                activity.startActivity(intent);
+                context.startActivity(intent);
             }
         });
 

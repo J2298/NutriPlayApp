@@ -85,6 +85,7 @@ public class DetalleJuegoActivity extends AppCompatActivity {
             cardVerdad.setCardBackgroundColor(Color.GREEN);
             anadirMonedas(monedas);
             alert.showDialog(DetalleJuegoActivity.this, descripcion, acierto);
+
         } else {
             Log.d("Respuesta:", "Respuesta incorrecta");
             cardVerdad.setCardBackgroundColor(Color.RED);

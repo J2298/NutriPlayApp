@@ -12,7 +12,7 @@ import com.job.nutriplayapp.R;
 import com.job.nutriplayapp.activities.JuegoActivity;
 
 public class ViewDialog {
-
+    Activity juegoac;
     public void showDialog(final Activity activity, String msg, String estado){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -29,9 +29,8 @@ public class ViewDialog {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Intent i1 = new Intent(activity, JuegoActivity.class);
-                v.getContext().startActivity(i1);
                 activity.finish();
+
             }
         });
         dialog.show();
