@@ -198,13 +198,17 @@ public class ModuloDetalleActivity extends AppCompatActivity {
                 if (realizado){
                     btnSiguiente.setVisibility(View.GONE);
                 }else{
-                    btnSiguiente.setTextSize(18);
+                    btnSiguiente.setTextSize(15);
+                    btnSiguiente.setBackground(getDrawable(R.drawable.boton_naranja_redondo));
+                    btnSiguiente.setTextColor(Color.WHITE);
                     btnSiguiente.setText("¡GANA MONEDAS!");
                 }
                 btnVolver.setText("ATRÁS");
             } else {
                 // still pages are left
-                btnSiguiente.setTextSize(15);
+                btnSiguiente.setTextSize(14);
+                btnSiguiente.setBackgroundColor(Color.TRANSPARENT);
+                btnSiguiente.setTextColor(Color.BLACK);
                 btnSiguiente.setText("SIGUIENTE");
                 btnVolver.setText("ATRÁS");
             }

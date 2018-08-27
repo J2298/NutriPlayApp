@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     private ConstraintLayout layoutButtons;
     private ConstraintLayout layoutContent;
     private boolean isOpen = false;
-    private TextView nombre, moneda, exp;
+    private TextView nombre, moneda, exp, textView5, textView6;
     private ImageView avatar;
     private String uid;
     private CardView expC, monedas;
@@ -68,6 +68,8 @@ public class HomeActivity extends AppCompatActivity {
         layoutContent = (ConstraintLayout) findViewById(R.id.layoutContent);
         expC = (CardView) findViewById(R.id.cardExp);
         monedas = (CardView) findViewById(R.id.cardMonedas);
+        textView5 = (TextView) findViewById(R.id.textView5);
+        textView6 = (TextView) findViewById(R.id.textView6);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -78,9 +80,9 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.mainTab);
-        tabLayout.addTab(tabLayout.newTab().setText("Modulos"));
+        tabLayout.addTab(tabLayout.newTab().setText("Módulos"));
         tabLayout.addTab(tabLayout.newTab().setText("Dato Curioso"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tip del Dia"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tip del Día"));
         tabLayout.setTabTextColors(Color.parseColor("#ffffff"), Color.parseColor("#ffffff"));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -149,6 +151,8 @@ public class HomeActivity extends AppCompatActivity {
             layoutButtons.setVisibility(View.VISIBLE);
             expC.setVisibility(View.INVISIBLE);
             monedas.setVisibility(View.INVISIBLE);
+            textView5.setVisibility(View.INVISIBLE);
+            textView6.setVisibility(View.INVISIBLE);
             animator.start();
 
             isOpen = true;
@@ -174,6 +178,8 @@ public class HomeActivity extends AppCompatActivity {
                     layoutButtons.setVisibility(View.GONE);
                     expC.setVisibility(View.VISIBLE);
                     monedas.setVisibility(View.VISIBLE);
+                    textView5.setVisibility(View.VISIBLE);
+                    textView6.setVisibility(View.VISIBLE);
                 }
 
                 @Override
